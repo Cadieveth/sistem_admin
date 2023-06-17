@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Edit | Data Film Actor</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
+	<style type="text/css">
+		.wrapper{
+			width: 600px;
+			margin: 0 auto;
+		}
+		.page-header h2{
+			margin-top: 0;
+		}
+		table tr td:last-child a{
+			margin-right: 15px;
+		}
+		</style>
+		<script type="text/javascript">
+		$(document).ready(function(){
+		$('[data-toggle="tooltip"]').tooltip();
+		});
+	</script>
+</head>
+<body>	
+<?php
+require_once('config.php');
+	$id = $_GET['actor_id'];
+	$sql = "SELECT * from 19n30008film_actor WHERE actor_id='$id'";
+	$result = $mysqli->query($sql);
+
+if ($result->num_rows > 0) {
+	while($row = $result->fetch_assoc()) {
+		$actor_id = $row['actor_id'];
+		$film_id = $row['film_id'];
+		}
+		}
+?>
+	<div class="wrapper">
+	<div class="container-fluid">
+	<div class="row">
+	<div class="col-md-12">
+	<div class="page-header clearfix">
+	<h2 class = "alert alert-dark text-center">Edit Data Film Actor</h2>
+  	</div>
+	<form action="updatefilm_actor.php" method="post" class="form-group alert">
+	<table cellpadding="8">
+
+
+	<div class="form-group">
+	<label>Actor ID </label>
+	<p></p>
+	<select name="actor_id" class="form-control" value="<?php echo $actor_id; ?>">
+	<option value=""> Please Select</option>
+		<?php
+		$sql = "SELECT * from 19n30008actor";
+		$result = $mysqli->query($sql);
+		if ($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+		echo "<option value=\"".$row['actor_id']."\" ";
+		if ($actor_id== $row['actor_id']) {
+		echo "selected";
+		}
+		echo ">".$row['last_name']."-".$row['actor_id']."</option>";
+		}
+		}
+		?>			
+		</select>
+		</div>
+
+	<div class="form-group">
+	<label>Film ID </label>
+	<p></p>
+	<select name="film_id" class="form-control" value="<?php echo $film_id; ?>">
+	<option value=""> Please Select</option>
+		<?php
+		$sql = "SELECT * from 19n30008film";
+		$result = $mysqli->query($sql);
+		if ($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+		echo "<option value=\"".$row['film_id']."\" ";
+		if ($film_id== $row['film_id']) {
+		echo "selected";
+		}
+		echo ">".$row['title']."-".$row['film_id']."</option>";
+		}
+		}
+		?>			
+		</select>
+		</div>
+	
+</label>
+</div>
+</form>	
+<div>
+<input type="submit" class="btn btn-success" name="Submit" value="Simpan" />
+<input name="batal" class="btn btn-danger" type="reset" id="batal" value="Reset" />
+<a href="resultfilm_actor.php" class="btn btn-primary">Kembali</a>
+</div>
+</div>
+</div>
+</div> 
+</body>
+</html>
